@@ -1,24 +1,14 @@
+[![](https://godoc.org/github.com/github.com/vmware-labs/yaml-jsonpointer?status.svg)](https://pkg.go.dev/github.com/vmware-labs/yaml-jsonpointer?tab=doc)
+[![Go Report Card](https://goreportcard.com/badge/github.com/github.com/vmware-labs/yaml-jsonpointer)](https://goreportcard.com/report/github.com/github.com/vmware-labs/yaml-jsonpointer)
 
 
 # yaml-jsonpointer
 
-## Overview
-
-## Try it out
-
-### Prerequisites
-
-* Prereq 1
-* Prereq 2
-* Prereq 3
-
-### Build & Run
-
-1. Step 1
-2. Step 2
-3. Step 3
+Package yptr is Go package with a JSONPointer implementation that can walk though a yaml.Node tree.
 
 ## Documentation
+
+Read full doc on the [Go package documentation page](https://pkg.go.dev/github.com/vmware-labs/yaml-jsonpointer?tab=doc).
 
 ## Contributing
 
