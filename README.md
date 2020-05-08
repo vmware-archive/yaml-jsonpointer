@@ -19,4 +19,4 @@ as an open-source patch. For more detailed information, refer to [CONTRIBUTING.m
 
 ## License
 
-yaml-jsonpointer is available under the [BSD-2 license](LICENSE.txt).
+yaml-jsonpointer is available under the [BSD-2 license](LICENSE).
