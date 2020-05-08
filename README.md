@@ -1,5 +1,6 @@
 [![](https://godoc.org/github.com/github.com/vmware-labs/yaml-jsonpointer?status.svg)](https://pkg.go.dev/github.com/vmware-labs/yaml-jsonpointer?tab=doc)
 [![Go Report Card](https://goreportcard.com/badge/github.com/github.com/vmware-labs/yaml-jsonpointer)](https://goreportcard.com/report/github.com/github.com/vmware-labs/yaml-jsonpointer)
+![](https://github.com/vmware-labs/yaml-jsonpointer/workflows/Go/badge.svg)
 
 
 # yaml-jsonpointer
