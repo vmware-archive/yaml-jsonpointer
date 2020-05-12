@@ -30,38 +30,48 @@ func isTreeSubset(a, b *yaml.Node) bool {
 
 	switch a.Kind {
 	case yaml.MappingNode:
-		x, y := a.Content, b.Content
-		for i := 0; i < len(x); i += 2 {
-			keyA, valueA := x[i].Value, x[i+1]
-			found := false
-			for j := 0; j < len(y); j += 2 {
-				keyB, valueB := y[j].Value, y[j+1]
-				if keyA == keyB && isTreeSubset(valueA, valueB) {
-					found = true
-					break
-				}
-			}
-			if !found {
-				return false
-			}
-		}
+		return isTreeSubsetMapping(a, b)
 	case yaml.SequenceNode:
-		x, y := a.Content, b.Content
-		for i := 0; i < len(x); i++ {
-			elA := x[i]
-			found := false
-			for j := 0; j < len(y); j++ {
-				elB := y[j]
-				if isTreeSubset(elA, elB) {
-					found = true
-					break
-				}
-			}
-			if !found {
-				return false
-			}
-		}
+		return isTreeSubsetMappingSequence(a, b)
 	}
 
+	return true
+}
+
+func isTreeSubsetMapping(a, b *yaml.Node) bool {
+	x, y := a.Content, b.Content
+	for i := 0; i < len(x); i += 2 {
+		keyA, valueA := x[i].Value, x[i+1]
+		found := false
+		for j := 0; j < len(y); j += 2 {
+			keyB, valueB := y[j].Value, y[j+1]
+			if keyA == keyB && isTreeSubset(valueA, valueB) {
+				found = true
+				break
+			}
+		}
+		if !found {
+			return false
+		}
+	}
+	return true
+}
+
+func isTreeSubsetMappingSequence(a, b *yaml.Node) bool {
+	x, y := a.Content, b.Content
+	for i := 0; i < len(x); i++ {
+		elA := x[i]
+		found := false
+		for j := 0; j < len(y); j++ {
+			elB := y[j]
+			if isTreeSubset(elA, elB) {
+				found = true
+				break
+			}
+		}
+		if !found {
+			return false
+		}
+	}
 	return true
 }
