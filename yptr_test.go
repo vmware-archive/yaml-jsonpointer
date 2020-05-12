@@ -104,7 +104,6 @@ spec:
 		{`/spec/template/spec/replicas`, "1", 5, 17},
 		{`/spec/template/spec/containers/0/image`, "nginx", 8, 16},
 		{`/spec/template/spec/containers/~{"name":"app"}/image`, "nginx", 8, 16},
-		{`/spec/template/spec/containers/~[name=app]/image`, "nginx", 8, 16},
 	}
 
 	for i, tc := range testCases {

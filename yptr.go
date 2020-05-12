@@ -104,13 +104,6 @@ func match(root *yaml.Node, tok string) ([]*yaml.Node, error) {
 				return nil, err
 			}
 			return filter(c, treeSubsetPred(&mtree))
-		case strings.HasPrefix(tok, "~["): // alternative syntax: ~[name=app]
-			s := strings.SplitN(strings.TrimSuffix(strings.TrimPrefix(tok, "~["), "]"), "=", 2)
-			if len(s) != 2 {
-				return nil, fmt.Errorf("syntax error, expecting ~[key=value]")
-			}
-			key, value := s[0], s[1]
-			return filter(c, keyValuePred(key, value))
 		default:
 			i, err := strconv.Atoi(tok)
 			if err != nil {
