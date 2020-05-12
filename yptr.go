@@ -143,15 +143,3 @@ func treeSubsetPred(a *yaml.Node) nodePredicate {
 		return isTreeSubset(a, b)
 	}
 }
-
-// keyValuePred is a node predicate that returns true if a node is an object that has a field
-// called key whose value is value.
-func keyValuePred(key, value string) nodePredicate {
-	a := &yaml.Node{
-		Kind: yaml.MappingNode, Content: []*yaml.Node{
-			{Kind: yaml.ScalarNode, Value: key},
-			{Kind: yaml.ScalarNode, Value: value},
-		},
-	}
-	return treeSubsetPred(a)
-}
