@@ -9,7 +9,7 @@ on:
 jobs:
 
   yptr:
-    name: Build
+    name: Test yptr
     runs-on: ubuntu-latest
     steps:
 
@@ -26,7 +26,7 @@ jobs:
       run: go test -v ./...
 
   yamled:
-    name: Build
+    name: Test yamled
     runs-on: ubuntu-latest
     steps:
 
