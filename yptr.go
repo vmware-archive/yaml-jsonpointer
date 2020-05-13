@@ -19,7 +19,7 @@ var (
 	ErrNotFound = fmt.Errorf("not found")
 )
 
-// FindAll finds all locations in the json/yaml tree pointed by root that match the extended
+// FindAll finds all locations in the json/yaml tree pointed to by root that match the extended
 // JSONPointer passed in ptr.
 func FindAll(root *yaml.Node, ptr string) ([]*yaml.Node, error) {
 	// TODO: remove dependency on jsonpointer since we only use it to split and unescape the pointer, which is trivial and well defined by the spec.
@@ -36,7 +36,9 @@ func FindAll(root *yaml.Node, ptr string) ([]*yaml.Node, error) {
 	return res, nil
 }
 
-// Find is like FindAll but returns ErrTooManyResults if multiple matches are located.
+// Find finds the only location in the json/yaml tree pointed to by root that matches the extended
+// JSONPointer passed in ptr. It returns ErrTooManyResults if multiple locations match. It
+// returns a nil pointer if no locations match.
 func Find(root *yaml.Node, ptr string) (*yaml.Node, error) {
 	res, err := FindAll(root, ptr)
 	if err != nil {

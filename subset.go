@@ -7,8 +7,8 @@ import (
 	yaml "gopkg.in/yaml.v3"
 )
 
-// isTreeSubset returns true if all elements of the json tree a exist in the json tree b.
-// i.e. when the a tree is a subset of the b tree.
+// isTreeSubset returns true if and only if all elements of the json tree a exist in the json tree b.
+// i.e. when the tree a is a subset of the tree b.
 //
 // e.g. [0,2] is a subset of [0,1,2]
 //      {"a":{"b":1}} is a subset of {"x":2, "a":{"c":4, "b":1, "d":5}, "y":1}
