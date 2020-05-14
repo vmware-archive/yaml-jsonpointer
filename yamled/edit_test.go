@@ -166,7 +166,7 @@ baz: end
 }
 
 func TestIndent(t *testing.T) {
-	// the long strings here excercise ErrShortSrc and ErrShortDst codepaths in the transformer.
+	// the long strings here exercise ErrShortSrc and ErrShortDst codepaths in the transformer.
 	src := `out:
   foo: abc
   other:
