@@ -5,7 +5,7 @@
 
 # yaml-jsonpointer
 
-Package yptr is Go package with a JSONPointer implementation that can walk though a yaml.Node tree.
+Package yptr is a Go package with a JSONPointer implementation that can walk though a yaml.Node tree.
 
 ## Documentation
 
