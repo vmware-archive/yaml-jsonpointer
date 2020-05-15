@@ -7,9 +7,9 @@ import (
 	"sort"
 	"unicode/utf8"
 
+	"github.com/vmware-labs/yaml-jsonpointer/yamled/splice"
 	"golang.org/x/text/transform"
 	"gopkg.in/yaml.v3"
-	"github.com/vmware-labs/yaml-jsonpointer/yamled/splice"
 )
 
 // Node returns a selection that spans over a YAML node.

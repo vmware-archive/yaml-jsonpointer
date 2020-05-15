@@ -12,9 +12,9 @@ import (
 	"strings"
 	"testing"
 
-	"golang.org/x/text/transform"
 	"github.com/vmware-labs/yaml-jsonpointer/yamled/atomicfile"
 	"github.com/vmware-labs/yaml-jsonpointer/yamled/splice"
+	"golang.org/x/text/transform"
 )
 
 func ExampleOp() {
