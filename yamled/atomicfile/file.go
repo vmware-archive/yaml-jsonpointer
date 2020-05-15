@@ -34,21 +34,29 @@ func Writer(filename string, perm os.FileMode) (*AtomicWriter, error) {
 	return &AtomicWriter{out, filename}, nil
 }
 
+// An AtomicWriter is a writer that atomically writes into a file once the Commit method is called.
 type AtomicWriter struct {
 	*os.File
 	filename string
 }
 
+// Close closes the atomic writer. The temporary file is deleted.
+// Commit cannot be called on a closed atomic writer.
 func (a *AtomicWriter) Close() error {
 	defer os.RemoveAll(a.Name())
 	return a.File.Close()
 }
 
+// Commit closes the temporary file and renames it over the target file.
+// Commit cannot be called on a closed atomic writer.
 func (a *AtomicWriter) Commit() error {
 	defer a.Close()
 	return os.Rename(a.Name(), a.filename)
 }
 
+// WriteFrom copies data from a read into a destination file identified by filename.
+// If the file already exists, it's replaced atomically with the new content and the
+// original file permissions are preserved.
 func WriteFrom(filename string, r io.Reader, perm os.FileMode) error {
 	w, err := Writer(filename, perm)
 	if err != nil {
