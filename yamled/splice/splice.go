@@ -23,10 +23,10 @@ import (
 	"golang.org/x/text/transform"
 )
 
-// Constructs a splice transformer given one or more operations.
-// A splice transformer implements golang.org/x/text/transform.Transform;
+// T constructs a splice transformer given one or more operations.
+// A splice transformer implements golang.org/x/text/transform.Transformer;
 // that package contains many useful functions to apply the transformation.
-func T(ops ...Op) *Transformer { return NewTransformer(ops...) }
+func T(ops ...Op) *Transformer { return newTransformer(ops...) }
 
 // A Op captures a request to replace a selection with a replacement string.
 // An idiomatic way to construct an Op instance is to call With or WithFunc on a Selection.
@@ -35,7 +35,7 @@ type Op struct {
 	Replace func(prev string) (string, error)
 }
 
-// A selection selects a range of characters in the input string buffer.
+// A Selection selects a range of characters in the input string buffer.
 // It's defined to be the range that starts at Start end ends before the End position.
 // Positions are  unicode codepoint offsets, not byte offsets.
 type Selection struct {

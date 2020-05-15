@@ -59,6 +59,7 @@ type Transformer struct {
 	lineStarts []int // codepoint position of each line
 }
 
+// Transform implements the golang.org/x/text/transform.Transformer interface.
 func (t *Transformer) Transform(dst, src []byte, atEOF bool) (nDst, nSrc int, err error) {
 	// hack: until we fix the incremental line indent parsing logic, let's load the whole buffer in memory.
 	if !atEOF {
@@ -100,6 +101,7 @@ func (t *Transformer) Transform(dst, src []byte, atEOF bool) (nDst, nSrc int, er
 	return nDst, nSrc, err
 }
 
+// Reset implements the golang.org/x/text/transform.Transformer interface.
 func (t *Transformer) Reset() {
 	t.t.Reset()
 	t.indents = nil

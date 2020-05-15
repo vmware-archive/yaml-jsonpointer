@@ -19,7 +19,7 @@ type Transformer struct {
 	old bytes.Buffer // old content of the span
 }
 
-func NewTransformer(ops ...Op) *Transformer {
+func newTransformer(ops ...Op) *Transformer {
 	sorted := make([]Op, len(ops))
 	copy(sorted, ops)
 	sort.Slice(sorted, func(i, j int) bool { return sorted[i].Start < sorted[j].Start })
@@ -28,12 +28,14 @@ func NewTransformer(ops ...Op) *Transformer {
 	return t
 }
 
+// Reset implements the golang.org/x/text/transform.Transformer interface.
 func (t *Transformer) Reset() {
 	t.op = 0
 	t.pos = 0
 	t.old.Reset()
 }
 
+// Transform implements the golang.org/x/text/transform.Transformer interface.
 func (t *Transformer) Transform(dst, src []byte, atEOF bool) (nDst, nSrc int, err error) {
 	rpos := 0 // codepoints consumed in this transform
 	defer func() {
