@@ -55,10 +55,48 @@ metadata:
 }
 
 func TestEdit(t *testing.T) {
-	src := `foo: abc
+	srcs := []struct {
+		src string
+		foo string
+		bar string
+	}{
+		{
+			src: `foo: abc
 bar: xy
 baz: end
-`
+`,
+			foo: "/foo",
+			bar: "/bar",
+		},
+		{
+			src: `foo: abc
+data:
+  bar: xy
+baz: end
+`,
+			foo: "/foo",
+			bar: "/data/bar",
+		},
+		{
+			src: `bar: xy
+data:
+  foo: abc
+baz: end
+`,
+			foo: "/data/foo",
+			bar: "/bar",
+		},
+		{
+			src: `bar: xy
+data:
+  deeper:
+    foo: abc
+baz: end
+`,
+			foo: "/data/deeper/foo",
+			bar: "/bar",
+		},
+	}
 
 	testCases := []struct {
 		foo string
@@ -115,53 +153,55 @@ baz: end
 	}
 
 	for i, tc := range testCases {
-		t.Run(fmt.Sprint(i), func(t *testing.T) {
-			var n yaml.Node
-			buf := []byte(src)
-			if err := yaml.Unmarshal(buf, &n); err != nil {
-				t.Fatal(err)
-			}
+		for j, cfg := range srcs {
+			t.Run(fmt.Sprintf("%d_%d", i, j), func(t *testing.T) {
+				var n yaml.Node
+				buf := []byte(cfg.src)
+				if err := yaml.Unmarshal(buf, &n); err != nil {
+					t.Fatal(err)
+				}
 
-			foo, err := yptr.Find(&n, "/foo")
-			if err != nil {
-				t.Fatal(err)
-			}
-
-			bar, err := yptr.Find(&n, "/bar")
-			if err != nil {
-				t.Fatal(err)
-			}
-
-			buf, _, err = transform.Bytes(yamled.T(
-				yamled.Node(foo).With(tc.foo),
-				yamled.Node(bar).With(tc.bar),
-			), []byte(src))
-			if err != nil {
-				t.Fatal(err)
-			}
-			t.Logf("after:\n%s", string(buf))
-
-			var ne yaml.Node
-			if err := yaml.Unmarshal(buf, &ne); err != nil {
-				t.Fatal(err)
-			}
-
-			check := func(path, want string) {
-				f, err := yptr.Find(&ne, path)
+				foo, err := yptr.Find(&n, cfg.foo)
 				if err != nil {
 					t.Fatal(err)
 				}
-				if got := f.Value; got != want {
-					t.Errorf("got: %q, want: %q", got, want)
+
+				bar, err := yptr.Find(&n, cfg.bar)
+				if err != nil {
+					t.Fatal(err)
 				}
 
-				if tag := f.Tag; tag != "!!str" && tag != "!!null" {
-					t.Errorf("tag for %q must be either string or null, got %q", path, tag)
+				buf, _, err = transform.Bytes(yamled.T(
+					yamled.Node(foo).With(tc.foo),
+					yamled.Node(bar).With(tc.bar),
+				), []byte(cfg.src))
+				if err != nil {
+					t.Fatal(err)
 				}
-			}
-			check("/foo", tc.foo)
-			check("/bar", tc.bar)
-		})
+				t.Logf("after:\n%s", string(buf))
+
+				var ne yaml.Node
+				if err := yaml.Unmarshal(buf, &ne); err != nil {
+					t.Fatal(err)
+				}
+
+				check := func(path, want string) {
+					f, err := yptr.Find(&ne, path)
+					if err != nil {
+						t.Fatal(err)
+					}
+					if got := f.Value; got != want {
+						t.Errorf("got: %q, want: %q", got, want)
+					}
+
+					if tag := f.Tag; tag != "!!str" && tag != "!!null" {
+						t.Errorf("tag for %q must be either string or null, got %q", path, tag)
+					}
+				}
+				check(cfg.foo, tc.foo)
+				check(cfg.bar, tc.bar)
+			})
+		}
 	}
 }
 
