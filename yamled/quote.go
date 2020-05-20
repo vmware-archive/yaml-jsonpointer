@@ -21,7 +21,7 @@ import (
 // just to avoid frustrating the user who intentionally quoted a string that didn't have to be quoted.
 // If the user didn't intentionally quote the string, we're not making the original file style any
 // worse than it already was.
-func quote(value, old string, indent int) (string, error) {
+func quote(value, old string, indent int) (res string, err error) {
 	indent += 2
 	if len(old) > 0 {
 		q := old[0]
@@ -38,7 +38,6 @@ func quote(value, old string, indent int) (string, error) {
 			}
 		}
 	}
-
 	return yamlString(value, indent)
 }
 
@@ -86,7 +85,7 @@ func yamlString(value string, indent int) (string, error) {
 // https://github.com/go-yaml/yaml/issues/501
 func reindent(s string, indent int) string {
 	lines := strings.Split(s, "\n")
-	if len(lines) > 2 {
+	if len(lines) > 1 {
 		for i := 1; i < len(lines); i++ {
 			if len(lines[i]) > 0 {
 				lines[i] = fmt.Sprintf("%s%s", strings.Repeat(" ", indent), lines[i])

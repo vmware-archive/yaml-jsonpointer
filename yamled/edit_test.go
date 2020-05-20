@@ -277,5 +277,39 @@ www:
 			check("/out/other/bar", tc.bar)
 		})
 	}
+}
 
+func TestBug1(t *testing.T) {
+	src := `data:
+  foo: |
+    bar: x
+`
+
+	rep := `x: y
+bar: y
+`
+
+	var root yaml.Node
+	if err := yaml.Unmarshal([]byte(src), &root); err != nil {
+		t.Fatal(err)
+	}
+	foo, err := yptr.Find(&root, "/data/foo")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	out, _, err := transform.Bytes(yamled.T(
+		yamled.Node(foo).With(rep),
+	), []byte(src))
+
+	t.Logf("got:\n%s", out)
+
+	want := `data:
+  foo: |
+    x: y
+    bar: y
+`
+	if got := string(out); got != want {
+		t.Errorf("got: %q, want: %q", got, want)
+	}
 }

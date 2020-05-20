@@ -42,26 +42,32 @@ func TestYamlString(t *testing.T) {
 
 func TestQuote(t *testing.T) {
 	testCases := []struct {
-		src  string
-		old  string
-		want string
+		src    string
+		old    string
+		want   string
+		indent int
 	}{
-		{"a", "b", "a"},
-		{"a", `"b"`, `"a"`},
-		{"1", "b", `"1"`},
-		{"1.0", "b", `"1.0"`},
-		{"1.0.0", "b", "1.0.0"},
-		{"1.0.0", `"b"`, `"1.0.0"`},
-		{"1.0.0", `"1"`, `1.0.0`},
+		{"a", "b", "a", 0},
+		{"a", `"b"`, `"a"`, 0},
+		{"1", "b", `"1"`, 0},
+		{"1.0", "b", `"1.0"`, 0},
+		{"1.0.0", "b", "1.0.0", 0},
+		{"1.0.0", `"b"`, `"1.0.0"`, 0},
+		{"1.0.0", `"1"`, `1.0.0`, 0},
 
-		{"a", "'b'", "'a'"},
-		{"a", "'#a'", "a"},
-		{"a\nb", "'b'", "|-\n  a\n  b"},
+		{"a", "'b'", "'a'", 0},
+		{"a", "'#a'", "a", 0},
+		{"a\nb", "'b'", "|-\n  a\n  b", 0},
+
+		{"x: y\nbar: y\n", "|\n  x: y\nbar: x\n", "|\n  x: y\n  bar: y", 0},
+		{"x: y\nbar: y\n", "|\n    x: y\n    bar: x\n", "|\n    x: y\n    bar: y", 2},
+		{"bar: y\n", "|\nbar: x\n", "|\n  bar: y", 0},
+		{"bar: y\n", "|\n    bar: x\n", "|\n    bar: y", 2},
 	}
 
 	for i, tc := range testCases {
 		t.Run(fmt.Sprint(i), func(t *testing.T) {
-			got, err := quote(tc.src, tc.old, 0)
+			got, err := quote(tc.src, tc.old, tc.indent)
 			if err != nil {
 				t.Fatal(err)
 			}
