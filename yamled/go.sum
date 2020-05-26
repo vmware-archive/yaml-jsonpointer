@@ -20,6 +20,8 @@ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZN
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.3.0 h1:TivCn/peBQ7UY8ooIcPgZFpTNSz0Q2U6UrFlUfqbe0Q=
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
+github.com/vmware-labs/go-yaml-edit v0.1.4 h1:k0LlIT7shFp5bUY1q+AUoO1FjI1wGheAzvO0/SxeNrc=
+github.com/vmware-labs/go-yaml-edit v0.1.4/go.mod h1:7xpZdQ4Y1V+AZtJRw2bH4R8+4Id9zj0DBXDmV26LzJg=
 github.com/vmware-labs/yaml-jsonpointer v0.1.0 h1:NH8aPX9cPqzI+3ti6L2QyMPl5Wy294G/BrtND0moyZ4=
 github.com/vmware-labs/yaml-jsonpointer v0.1.0/go.mod h1:JDtZ8Hd3hkVzyCAoBXxOSfP9aVfUMAG9OSPfgQTvCQk=
 golang.org/x/text v0.3.2 h1:tW2bmiBqwgJj/UpqtC8EpXEZVYOwU0yG4iWbprSVAcs=

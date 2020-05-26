@@ -18,64 +18,33 @@ package splice
 
 import (
 	"io"
-	"io/ioutil"
 
-	"golang.org/x/text/transform"
+	"github.com/vmware-labs/go-yaml-edit/splice"
 )
 
 // T constructs a splice transformer given one or more operations.
 // A splice transformer implements golang.org/x/text/transform.Transformer;
 // that package contains many useful functions to apply the transformation.
-func T(ops ...Op) *Transformer { return newTransformer(ops...) }
+func T(ops ...Op) *Transformer { return splice.T(ops...) }
+
+type Transformer = splice.Transformer
 
 // A Op captures a request to replace a selection with a replacement string.
 // An idiomatic way to construct an Op instance is to call With or WithFunc on a Selection.
-type Op struct {
-	Selection
-	Replace func(prev string) (string, error)
-}
+type Op = splice.Op
 
 // A Selection selects a range of characters in the input string buffer.
 // It's defined to be the range that starts at Start end ends before the End position.
 // Positions are  unicode codepoint offsets, not byte offsets.
-type Selection struct {
-	Start int
-	End   int
-}
-
-// With returns an operation that captures a replacement of the current selection with a desired replacement string.
-func (s Selection) With(r string) Op {
-	return s.WithFunc(func(string) (string, error) { return r, nil })
-}
-
-// WithFunc returns an operation that will call the f callback on the previous value of the selection
-// and replace the selection with the return value of the callback.
-func (s Selection) WithFunc(f func(prev string) (string, error)) Op {
-	return Op{s, f}
-}
+type Selection = splice.Selection
 
 // Span constructs a Selection.
-func Span(start, end int) Selection { return Selection{start, end} }
+func Span(start, end int) Selection { return splice.Span(start, end) }
 
 // Peek returns a slice of strings for each extent of the input reader.
 // The order of the resulting slice matches the order of the provided selection slice
 // (which can be in any order; slice provides the necessary sorting to guarantee a single
 // scan pass on the reader).
 func Peek(r io.Reader, sels ...Selection) ([]string, error) {
-	var (
-		reps = make([]Op, len(sels))
-		res  = make([]string, len(sels))
-	)
-	for i, sel := range sels {
-		i := i
-		reps[i] = sel.WithFunc(func(prev string) (string, error) {
-			res[i] = prev
-			return prev, nil
-		})
-	}
-
-	if _, err := io.Copy(ioutil.Discard, transform.NewReader(r, T(reps...))); err != nil {
-		return nil, err
-	}
-	return res, nil
+	return splice.Peek(r, sels...)
 }

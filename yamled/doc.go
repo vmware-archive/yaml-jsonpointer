@@ -4,12 +4,9 @@
 /*
 Package yamled implements helpers for in-place editing of YAML sources.
 
-The editing is performed by a golang.org/x/text/transform.Transformer implementation
-configured with one or more editing operations.
+Moved to https://github.com/vmware-labs/go-yaml-edit
 
-Editing operations are defined as string replacements over selections covering YAML nodes in the YAML source.
-
-Selections are constructing from *yaml.Node value that can be obtained somehow (e.g. manually or via the YAML JSONPointer or YAML JSONPath libraries).
+Release v0.1.4 is the last release of this package, which is now implemented in terms of `github.com/vmware-labs/go-yaml-edit`, i.e. clients can safely depend on both import paths and Go module minimal version selection will do the right thing.
 
 */
 package yamled

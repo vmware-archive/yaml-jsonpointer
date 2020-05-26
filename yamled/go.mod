@@ -3,7 +3,7 @@ module github.com/vmware-labs/yaml-jsonpointer/yamled
 go 1.14
 
 require (
-	github.com/vmware-labs/yaml-jsonpointer v0.1.0
+	github.com/vmware-labs/go-yaml-edit v0.1.4
 	golang.org/x/text v0.3.2
 	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
 )
