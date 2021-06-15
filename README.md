@@ -1,3 +1,14 @@
+# WARNING: This repository is no longer actively maintained by VMware.
+
+VMware has made the difficult decision to stop driving this project and therefore we will no longer actively respond
+to issues or pull requests. If you would like to take over maintaining this project independently from VMware, please
+let us know so we can add a link to your forked project here.
+
+Thank You.
+
+#
+#
+
 [![](https://godoc.org/github.com/github.com/vmware-labs/yaml-jsonpointer?status.svg)](https://pkg.go.dev/github.com/vmware-labs/yaml-jsonpointer?tab=doc)
 [![Go Report Card](https://goreportcard.com/badge/github.com/vmware-labs/yaml-jsonpointer)](https://goreportcard.com/report/github.com/vmware-labs/yaml-jsonpointer)
 ![](https://github.com/vmware-labs/yaml-jsonpointer/workflows/CI/badge.svg)
